@@ -20,11 +20,17 @@ def create_dataset(img_folder, IMG_HEIGHT, IMG_WIDTH):
       
           image_path= os.path.join(img_folder, dir1,  file)
           image= cv2.imread( image_path, cv2.COLOR_BGR2RGB)
-          image=cv2.resize(image, (IMG_HEIGHT, IMG_WIDTH),interpolation = cv2.INTER_AREA)
-          image=np.array(image)
-          image = image.astype('float32')
-          image /= 255 
-          img_data_array.append(image)
-          target_class_array.append(dir1)
+          # If else to catch fail to load image, prevent it from breaking
+          if image is not None:
+            image=cv2.resize(image, (IMG_HEIGHT, IMG_WIDTH),interpolation = cv2.INTER_AREA)
+            image=np.array(image)
+            image = image.astype('float32')
+            image /= 255 
+            img_data_array.append(image)
+            target_class_array.append(dir1)
+          else:
+            print(f'[ERR] Unable to read this {image_path}')
+            pass
+
   return img_data_array, target_class_array
 
