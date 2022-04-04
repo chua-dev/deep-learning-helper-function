@@ -34,3 +34,7 @@ def create_dataset(img_folder, IMG_HEIGHT, IMG_WIDTH):
 
   return img_data_array, target_class_array
 
+# Create unique class dictionary out of target_class_array
+def unique_class_dic_generator(raw_y_array):
+  class_dictionary = {k: v for v, k in enumerate(np.unique(raw_y_array))}
+  return class_dictionary
